@@ -94,7 +94,7 @@ public class app {
     }
 
     public static boolean restaurantExists(ArrayList<Restaurant> inR, String inName){
-        if (findRestaurantLoc(inName, inR) == 999)
+        if (findRestaurantLoc(inName, inR) == -1)
             return false;
         return true;
     }
@@ -105,7 +105,7 @@ public class app {
 
     public static void removeRestaurant(String name, ArrayList<Restaurant> inR){
         //remove restaurant to array list
-        if (findRestaurantLoc(name, inR) == 999){
+        if (findRestaurantLoc(name, inR) == -1){
             System.out.println("Error: restaurant name not found");
             return;
         }
@@ -121,15 +121,14 @@ public class app {
 
     public static int findRestaurantLoc(String name, ArrayList<Restaurant> inR){
         //find the location of restaurrant in restaurant array
-        int temp = 999;
         for (int i=0; i<inR.size(); i++){
-            System.out.println("Current restaurant about to be checked: "+inR.get(i).getName());
+            //System.out.println("Current restaurant about to be checked: "+inR.get(i).getName());
             if (inR.get(i).getName().toLowerCase().equals(name.toLowerCase())){
                 
-                temp = i;
+                return i;
             }
         }
-        return temp;
+        return -1;
     }
 
 
@@ -140,7 +139,7 @@ public class app {
         Scanner userInput = new Scanner(System.in); 
         System.out.println("You are now in the branch Interface, to go back to the main menu. Enter Exit ");
         while (awake){
-            System.out.println("branch Interface: "+ "\n" + "1. add" + "\n" + "2. remove" + "\n" + "3. show"+ "\n" + "4. exit");
+            System.out.println("branch Interface: "+ "\n" + "1. add" + "\n" + "2. remove" + "\n" + "3. show"+"\n"+ "4. branch login"+ "\n" + "5. exit");
             switch (userInput.nextLine().toLowerCase()) {
                 case "show":
                     System.out.println(getBranches(restaurants, selectedRestaurant));
@@ -157,11 +156,11 @@ public class app {
                     tempID = userInput.next();
                     removeBranch(tempID, selectedRestaurant, restaurants);
                     break;
-                case "login branch":
+                case "branch login":
                     System.out.println("For which branch would you like to log in: ");
-                    String temp = userInput.nextLine();
-                    if(branchExists(temp, selectedRestaurant, restaurants)){
-                        restaurants = branchInterface(selectedRestaurant,temp,restaurants);
+                    String selectedBranch = userInput.nextLine();
+                    if(branchExists(selectedRestaurant,selectedBranch, restaurants)){
+                        restaurants = branchInterface(selectedRestaurant,selectedBranch,restaurants);
                     }else{
                         System.out.println("branch doesnt exist");
                     }
@@ -196,7 +195,7 @@ public class app {
     } 
     public static int findBranchLoc(String restName, String searchID,ArrayList<Restaurant> inR ){
         //find the location of the branch in array list branches of the restauraunt
-        int temp =999;
+        int temp =-1;
         Restaurant chosen = findRestaurant(restName, inR); //find restaurant object
         for (int i = 0; i <chosen.getBranches().size(); i++) { //find branch of restaurant
             if (chosen.getBranches().get(i).getID().toLowerCase().equals(searchID.toLowerCase()) ){
@@ -207,7 +206,7 @@ public class app {
         return temp;
     }
     public static void removeBranch(String searchID,String restName,ArrayList<Restaurant> inR){
-        if (findBranchLoc(restName,searchID, inR) == 999){
+        if (findBranchLoc(restName,searchID, inR) == -1){
             System.out.println("Branch doent exit");
             return;
         }
@@ -216,7 +215,7 @@ public class app {
     }
     public static boolean branchExists(String restName,String branchID, ArrayList<Restaurant> inR){
         
-        if (findBranchLoc(restName, branchID, inR) == 999)
+        if (findBranchLoc(restName, branchID, inR) == -1)
             return false;
 
        return true;
@@ -229,18 +228,19 @@ public class app {
         System.out.println("You are now in the branch Interface of a specific branch");
 
         while (awake){
-            System.out.println("branch Interface: "+ "\n" + "1. customer login" + "\n" + "2. Manager login" + "\n" + "3. Receptionist login"+ "\n" + "4. waiter login" +"\n"+ "5. Exit");
+            System.out.println("branch Interface: "+ "\n" + "1. customer login" + "\n" + "2. Receptionist login"+ "\n" + "3. waiter login"+ "\n" + "4. menu" +"\n"+ "5. Exit");
             switch (userInput.nextLine().toLowerCase()) {
                 case "customer login":
                     
                     break;
-                case "manager login":
-
-                    break;
+                
                 case"receptionist login":
 
                     break;
                 case "waiter login":
+
+                    break;
+                case "menu":
 
                     break;
                 case "exit":
