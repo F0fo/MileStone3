@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class TableSeat {
     String seatID;
-    ArrayList<Meal> seatMeal;
+    ArrayList<Meal> seatMeals;
 
     public TableSeat(String inID){
         this.seatID = inID;
-        this.seatMeal = new ArrayList<Meal>(); 
+        this.seatMeals = new ArrayList<Meal>(); 
     }
 
     public void setSeatID(String inID){
@@ -17,6 +17,9 @@ public class TableSeat {
     public String getSeatID(){
 
         return this.seatID;
+    }
+    public ArrayList<Meal> getSeatMeals(){
+        return this.getSeatMeals();
     }
 
 }

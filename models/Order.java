@@ -15,4 +15,7 @@ public class Order {
     public void setID(String newID){
         this.ID = newID;
     }
+    public ArrayList<Meal> getMeals(){
+        return this.meals;
+    }
 }

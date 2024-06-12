@@ -311,6 +311,10 @@ public class app {
                     System.out.println("Enter the seat count (Int)");
                     int tempSeatCount = userInput.nextInt();
                     addTable(tempTableNom,tempSeatCount,selectedRestaurant,selectedBranch,inR);
+                    for (int i = 0; i < findTable(tempTableNom, selectedRestaurant, selectedBranch, inR).getSeatCount(); i++){
+                        System.out.println("Enter the ID for the seat of the table");
+                        findTable(tempTableNom, selectedRestaurant, selectedBranch, inR).getTableSeats().get(i).setSeatID(userInput.nextLine());
+                    }
                 break;
                 case "exit":
                     awake = false;
@@ -377,6 +381,16 @@ public class app {
         return false;
 
     }
+    public static Table findTable(String selectedTableNom, String selectedRestaurant,String selectedBranch, ArrayList<Restaurant> inR){
+        if (tableExists(selectedTableNom, selectedRestaurant, selectedBranch, inR) == true){
+            for (int i = 0; i < findBranch(selectedBranch, selectedRestaurant, inR).getTables().size(); i++){ 
+                if (findBranch(selectedBranch, selectedRestaurant, inR).getTables().get(i).getTableNo().toLowerCase().equals(selectedTableNom.toLowerCase())){
+                    return findBranch(selectedBranch, selectedRestaurant, inR).getTables().get(i);
+                }
+            }
+        }
+        return null;
+    }
 
     public static ArrayList<Restaurant> waiterInterface(String selectedRestaurant,String selectedBranch, ArrayList<Restaurant> inR){
         boolean awake = true;
@@ -386,10 +400,41 @@ public class app {
         while (awake){
             System.out.println("What would you like to do?");
             switch (userInput.nextLine().toLowerCase()) {
-                case "":
-                    
+                case "create order":
+                        System.out.println("For which table does this order belong to? (tableNo)");
+                        String tempTableNom = userInput.nextLine();
+                        if (tableExists(tempTableNom, selectedRestaurant, selectedBranch, inR)){
+                            Table tempTable = findTable(tempTableNom, selectedRestaurant, selectedBranch, inR);
+                            System.out.println("what will be the orderID for the table?");
+                            tempTable.getTableOrder().setID(userInput.nextLine());
+                        }else{
+                            System.out.println("table doesnt exist");
+                            break;
+                        }
                     break;
-            
+                case"add meal":
+                        System.out.println("For which table does this meal belong to? (tableNo)");
+                        String tempTableNomTwo = userInput.nextLine();
+                        System.out.println("For which Seat does this meal belong to? (seatNo)");
+                        String tempSeatNom = userInput.nextLine();
+                        if (seatExists(tempTableNomTwo, tempSeatNom, selectedRestaurant, selectedBranch, inR) & tableExists(tempTableNomTwo, selectedRestaurant, selectedBranch, inR)){
+                            System.out.println("What will the meal be for this seat?");
+                            findTableSeat(tempTableNomTwo, tempSeatNom, selectedRestaurant, selectedBranch, inR).getSeatMeals().add(new Meal(userInput.nextLine()));
+                        }
+                            break;
+                case"show meal":
+                    System.out.println("For which table do you want to see the meals belong to? (tableNo)");
+                    String tempTableNomThree = userInput.nextLine();
+                    String out = "Meals of this table: ";
+                    if (tableExists(tempTableNomThree, selectedRestaurant, selectedBranch, inR)){
+                        for (int i = 0; i < findTable(tempTableNomThree, selectedRestaurant, selectedBranch, inR).getSeatCount(); i++ ){
+                            out = out + findTable(tempTableNomThree, selectedRestaurant, selectedBranch, inR).getTableSeats().get(i).getSeatMeals().toString() +", ";
+                       }
+                       break;
+                    }else{
+                        System.out.print("Table doesnt exist, check again or add it");
+                    }
+                    break;
                 default:
                     break;
             }
@@ -397,6 +442,23 @@ public class app {
         
         return inR;
     }
+public static boolean seatExists(String selectedTableNom, String selectedSeatNom,String selectedRestaurant,String selectedBranch, ArrayList<Restaurant> inR){
+    for (int i = 0; i < findTable(selectedTableNom, selectedRestaurant, selectedBranch, inR).getSeatCount(); i++){
+        if(findTable(selectedTableNom, selectedRestaurant, selectedBranch, inR).getTableSeats().get(i).getSeatID().toLowerCase().equals(selectedTableNom.toLowerCase())){
+            return true;
+        }
+    }
+    return false;
+}
+public static TableSeat findTableSeat(String selectedTableNom, String selectedSeatNom,String selectedRestaurant,String selectedBranch, ArrayList<Restaurant> inR){
+    for (int i = 0; i < findTable(selectedTableNom, selectedRestaurant, selectedBranch, inR).getSeatCount(); i++){
+        if(findTable(selectedTableNom, selectedRestaurant, selectedBranch, inR).getTableSeats().get(i).getSeatID().toLowerCase().equals(selectedTableNom.toLowerCase())){
+            return findTable(selectedTableNom, selectedRestaurant, selectedBranch, inR).getTableSeats().get(i);
+        }
+    }
+    return null;
+}
+
 
     public static ArrayList<Restaurant> menuInterface(String selectedRestaurant,String selectedBranch, ArrayList<Restaurant> inR){
         boolean awake = true;

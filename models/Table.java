@@ -34,5 +34,10 @@ public class Table {
     public void setTableNO(String newNO){
         this.TableNO = newNO;
     }
-    
+    public Order getTableOrder(){
+        return this.tablOrder;
+    }
+    public ArrayList<TableSeat> getTableSeats(){
+        return this.TableSeats;
+    }
 }
