@@ -25,4 +25,7 @@ public class MenuSection {
             if (menuItems.get(i).name == newItem.name)
                 menuItems.set(i, newItem);
     }
+    public ArrayList<MenuItem> getMenuItems(){
+        return this.menuItems;
+    }
 }

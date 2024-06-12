@@ -22,9 +22,9 @@ public class Restaurant {
         this.name = newName;
     }
 
-    public void addBranch(String ID, String Address)
+    public void addBranch(String ID, String Address, String menuName)
     {
-        branch newBranch = new branch(ID, Address);
+        branch newBranch = new branch(ID, Address, menuName);
         branches.add(newBranch);    
     }
 

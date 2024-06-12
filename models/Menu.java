@@ -27,5 +27,8 @@ public class Menu {
     public void setName(String inName){
         this.name = inName;
     }
+    public ArrayList<MenuSection> getMenuSections(){
+        return this.MenuSections;
+    }
 
 }

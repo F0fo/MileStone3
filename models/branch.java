@@ -4,14 +4,14 @@ import java.util.ArrayList;
 public class branch {
     String ID;
     String Address;
-    ArrayList<Menu> menus;
+    Menu menu;
     ArrayList<Table> tables;
     ArrayList<Employee> employees; 
-    public branch(String ID, String Address)
+    public branch(String ID, String Address, String menuName)
     {
         this.ID = ID;
         this.Address = Address;
-        this.menus = new ArrayList<Menu>();   
+        this.menu = new Menu(menuName);   
         this.tables = new ArrayList<Table>(); 
         this.employees = new ArrayList<Employee>();
     }
@@ -29,6 +29,12 @@ public class branch {
 
     public void setAddress(String inAddress){
         this.Address = inAddress;
+    }
+    public Menu getMenu(){
+        return this.menu;
+    }
+    public ArrayList<Table> getTables(){
+        return this.tables;
     }
 
 }   
