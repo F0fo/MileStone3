@@ -34,4 +34,5 @@ public class Table {
     public void setTableNO(String newNO){
         this.TableNO = newNO;
     }
+
 }

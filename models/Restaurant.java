@@ -38,6 +38,9 @@ public class Restaurant {
         }
 
     }
+    public ArrayList<branch> getBranches(){
+        return this.branches;
+    }
     
 
 }
